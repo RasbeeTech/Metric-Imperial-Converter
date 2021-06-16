@@ -3,23 +3,54 @@ function ConvertHandler() {
   this.getNum = function(input) {
     let result;
     let letters = /^[A-Za-z]+$/;
-    
-    result = eval(input.split("").filter((substr) => {
-      return !letters.test(substr);
-    }).join(""));
 
-    return result ? result: 1;
+    // check input for spaces.
+    if(input.includes(" ")) return "invalid number";
+
+    // Gets number by splitting the input. and evaluating result.
+    let index = input.split("").findIndex((s) => letters.test(s));
+    result = input.slice(0, index);
+    
+    // if no input is given, default is 1.
+    if(result.length == 0) {
+      result = 1;
+    } else {
+      // check if input is valid.
+      if(!/^[0-9./]+$/.test(result)){
+        return 'invalid number';
+      }
+    }
+    // If input is valid, evaluate.
+    try {
+      result = eval(result);
+    } catch(e){
+      return 'invalid number';
+    }
+
+    return result.toFixed(5);
   };
   
   this.getUnit = function(input) {
     let result;
     let letters = /^[A-Za-z]+$/;
 
-    result=input.split("").filter((substr) => {
-      return letters.test(substr);
-    }).join("");
+    // Gets unit by splitting the input. and evaluating result.
+    let index = input.split("").findIndex((s) => letters.test(s));
+    result = input.slice(index);
 
+    // Check unit is valid.
+    if(!letters.test(result)){
+      return 'invalid unit';
+    }
+
+    // Convert liter unit from 'l' to 'L'.
     result = result !== "l" ? result : "L";
+
+    // Checks for invalid units.
+    if(!['km', 'L', 'kg', 'mi', 'gal', 'lbs'].includes(result)){
+      return "invalid unit";
+    }
+
     return result;
   };
   
