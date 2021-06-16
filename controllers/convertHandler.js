@@ -27,7 +27,7 @@ function ConvertHandler() {
       return 'invalid number';
     }
 
-    return result.toFixed(5);
+    return result;
   };
   
   this.getUnit = function(input) {
