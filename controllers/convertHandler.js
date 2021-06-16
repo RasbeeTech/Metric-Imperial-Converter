@@ -19,6 +19,10 @@ function ConvertHandler() {
       if(!/^[0-9./]+$/.test(result)){
         return 'invalid number';
       }
+      // if input contains multiple '/'s.
+      if((result.match(/\//g) || []).length > 1){
+        return 'invalid number';
+      }
     }
     // If input is valid, evaluate.
     try {
@@ -45,6 +49,9 @@ function ConvertHandler() {
 
     // Convert liter unit from 'l' to 'L'.
     result = result !== "l" ? result : "L";
+
+    // Convert to lowercase if a not Liter.
+    result = result !== "L" ? result.toLowerCase(): result;
 
     // Checks for invalid units.
     if(!['km', 'L', 'kg', 'mi', 'gal', 'lbs'].includes(result)){
@@ -87,22 +94,16 @@ function ConvertHandler() {
     switch(initUnit.toLowerCase()){
       case "gal":
         return (initNum * galToL).toFixed(5);
-        break;
       case "lbs":
         return (initNum * lbsToKg).toFixed(5);
-        break;
       case "mi":
         return (initNum * miToKm).toFixed(5);
-        break;
       case "l":
         return (initNum / galToL).toFixed(5);
-        break;
       case "kg":
         return (initNum / lbsToKg).toFixed(5);
-        break;
       case "km":
         return (initNum / miToKm).toFixed(5);
-        break;
     }
 
     return result;
