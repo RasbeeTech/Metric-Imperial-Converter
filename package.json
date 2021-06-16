@@ -4,7 +4,8 @@
   "description": "Metric / Imperial Unit Converter",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha ./tests/ --ui tdd"
   },
   "keywords": [],
   "author": "RasbeTech",
